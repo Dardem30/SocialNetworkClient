@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../share/authService';
+import {Router} from '@angular/router';
+import {SearchComponent} from '../search/serch.component';
 
 @Component({
   selector: 'header-comp',
@@ -9,7 +11,9 @@ import {AuthService} from '../../share/authService';
 })
 export class HeaderComponent implements OnInit{
   user:User;
-  constructor(private authService:AuthService){
+  model: any = {};
+
+  constructor(private authService:AuthService,private router:Router,private searchClass:SearchComponent){
 
   }
   ngOnInit(): void {
@@ -18,5 +22,8 @@ export class HeaderComponent implements OnInit{
   }
   logout(){
     this.authService.logout();
+  }
+  search(){
+    this.router.navigate(['search', this.model.serchText]);
   }
 }

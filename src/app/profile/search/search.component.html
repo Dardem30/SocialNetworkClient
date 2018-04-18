@@ -1,0 +1,4 @@
+<header-comp></header-comp>
+<div *ngFor="let user of users">
+  <div (click)="toAnother(user.id)">{{user.name}}</div>
+</div>

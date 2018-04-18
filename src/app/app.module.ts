@@ -18,10 +18,16 @@ import {HeaderComponent} from './profile/header/header.component';
 import {MainComponent} from './profile/main/main.component';
 import {PhotoService} from './share/photoService';
 import {HttpClientModule} from '@angular/common/http';
+import {SearchComponent} from './profile/search/serch.component';
+import {AnotherMainComponent} from './profile/anotherProfel/anotherMain.component';
+import {CommentPageComponent} from './profile/commentPage/commentPage.component';
 
 const routes: Routes = [
   {path: '', component:LoginComponent},
   {path: 'main', component:ProfileComponent,canActivate: [AuthGuard]},
+  {path: 'search/:name', component:SearchComponent,canActivate: [AuthGuard]},
+  {path: 'anotherMain/:id', component:AnotherMainComponent,canActivate: [AuthGuard]},
+  {path: 'comment/:id', component:CommentPageComponent,canActivate: [AuthGuard]},
   {path: 'registration', component:RegistrationComponent}
 ];
 @NgModule({
@@ -31,7 +37,10 @@ const routes: Routes = [
     ProfileComponent,
     RegistrationComponent,
     HeaderComponent,
-    MainComponent
+    MainComponent,
+    SearchComponent,
+    AnotherMainComponent,
+    CommentPageComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +49,7 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [AuthGuard, AuthService,PhotoService],
+  providers: [AuthGuard, AuthService,PhotoService,SearchComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

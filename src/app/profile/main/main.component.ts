@@ -19,11 +19,13 @@ export class MainComponent{
   constructor(private photoService:PhotoService,private authService:AuthService,private router:Router) { }
 
   ngOnInit() {
+    this.reboot();
+  }
+  reboot(){
     this.authService.fetchByUsername(localStorage.getItem("username")).subscribe(res=> {
       this.authService.fetchPhotosById((res.json() as User).id).subscribe(res => this.photos = res.json() as Photo[]);
     })
   }
-
   selectFile(event) {
     this.selectedFiles = event.target.files;
   }
@@ -37,11 +39,12 @@ export class MainComponent{
     });
 
     this.selectedFiles = undefined;
+    this.router.navigate(['main']);
   }
   like(id:number){
-    this.authService.like(id).subscribe(res=>{
-      this.authService.fetchByUsername(localStorage.getItem("username")).subscribe(res=> {
-      this.authService.fetchPhotosById((res.json() as User).id).subscribe(res => this.photos = res.json() as Photo[]);
-    })})
+    this.authService.like(id).subscribe(res=>{this.reboot();console.log(res.json())})
+  }
+  comment(id:number){
+    this.router.navigate(['comment', id]);
   }
 }

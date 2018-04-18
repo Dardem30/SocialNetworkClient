@@ -1,0 +1,29 @@
+<header-comp></header-comp>
+<img src="data:image/jpeg;base64,{{photo.content}}"><br>
+<div *ngFor="let comment of photo.comments" >
+  {{comment.nameuser}} {{comment.surnameuser}}:
+   {{comment.text}}
+  <div class="dropdown">
+    <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">answer</button>
+    <div class="dropdown-menu">
+      <form  (ngSubmit)="f.form.valid && sendAnswer(comment.id)" #f="ngForm" >
+        <input class="form-control" rows="5" name="answer" [(ngModel)]="model.answer" #answer="ngModel" required minlength="1">
+        <div *ngIf="f.submitted && !answer.valid" class="help-block" style="color: crimson">void</div>
+        <button type="submit" class="btn btn-dark">send</button>
+      </form>
+    </div>
+  </div>
+  <div *ngFor="let answer of comment.answers">
+    {{answer.nameuser}}
+    {{answer.surnameuser}}:
+    +{{comment.nameuser}} {{answer.text}}
+  </div>
+</div>
+<div class="form-group">
+  <form  (ngSubmit)="f.form.valid && send()" #f="ngForm" >
+   <label for="comment">Comment:</label>
+   <textarea class="form-control" rows="5" id="comment" name="commentText" [(ngModel)]="model.commentText" #commentText="ngModel" required minlength="1"></textarea>
+    <div *ngIf="f.submitted && !commentText.valid" class="help-block" style="color: crimson">void</div>
+    <button type="submit" class="btn btn-primary">send</button>
+  </form>
+</div>

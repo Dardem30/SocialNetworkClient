@@ -32,8 +32,8 @@ export class AuthService {
          }
       });
   }
-  registration(username:string,password:string,email:string) {
-    let body = JSON.stringify({'username': username, 'password': password, 'email': email});
+  registration(username:string,password:string,email:string,name:string,surname:string) {
+    let body = JSON.stringify({'username': username, 'password': password, 'email': email,'name':name,'surname':surname});
     let header = new Headers();
     header.append('Content-Type', 'application/json');
     let options = new RequestOptions({headers: header});
@@ -52,6 +52,12 @@ export class AuthService {
     let options = new RequestOptions({headers: header});
     return this.http.get('http://localhost:8080/userPhoto/' + id, options);
   }
+  findOnlyPhotoById(photoId){
+    let header = new Headers();
+    header.append('Token', localStorage.getItem("currentUser"))
+    let options = new RequestOptions({headers: header});
+    return this.http.get('http://localhost:8080/photo/' +photoId, options);
+  }
   like(id:number){
     const formdata: FormData = new FormData();
     formdata.append('Token',localStorage.getItem("currentUser"));
@@ -66,5 +72,45 @@ export class AuthService {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('username');
     this.router.navigate([''])
+  }
+  fetchByName(name:string){
+    let header = new Headers();
+    header.append('Content-Type', 'application/json');
+    header.append('Token',localStorage.getItem("currentUser"))
+    let options = new RequestOptions({headers: header});
+    return this.http.get('http://localhost:8080/usersName/'+name,options);
+  }
+  fetchById(userId:number){
+    let header = new Headers();
+    header.append('Content-Type', 'application/json');
+    header.append('Token',localStorage.getItem("currentUser"))
+    let options = new RequestOptions({headers: header});
+    return this.http.get('http://localhost:8080/users/'+userId,options);
+  }
+  sendComment(photoId: number,text:string){
+    const formdata: FormData = new FormData();
+    formdata.append('username',localStorage.getItem("username"));
+    formdata.append('text',text);
+    let header = new Headers();
+    header.append('Token',localStorage.getItem("currentUser"))
+    let options = new RequestOptions({headers: header});
+    return this.http.post('http://localhost:8080/comment/'+photoId,formdata,options);
+  }
+  sendMessage(userId:number, text:string){
+    const formdata: FormData = new FormData();
+    formdata.append('text',text);
+    let header = new Headers();
+    header.append('Token',localStorage.getItem("currentUser"))
+    let options = new RequestOptions({headers: header});
+    return this.http.post('http://localhost:8080/sendMessage/'+userId,formdata,options);
+  }
+  sendAnswer(comentId: number,text:string){
+    const formdata: FormData = new FormData();
+    formdata.append('username',localStorage.getItem("username"));
+    formdata.append('text',text);
+    let header = new Headers();
+    header.append('Token',localStorage.getItem("currentUser"))
+    let options = new RequestOptions({headers: header});
+    return this.http.post('http://localhost:8080/answer/'+comentId,formdata,options);
   }
 }
