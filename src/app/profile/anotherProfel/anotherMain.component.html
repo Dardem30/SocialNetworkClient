@@ -8,14 +8,13 @@
     <div class="dropdown">
       <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">message</button>
       <div class="dropdown-menu">
-        <form  (ngSubmit)="sendMessage()">
           <input class="form-control" name="text" [(ngModel)]="model.text" #text="ngModel">
-          <button type="submit" class="btn btn-dark">send</button>
-        </form>
+          <button type="submit" class="btn btn-dark" (click)="sendMessage()">send</button>
       </div>
     </div>
   </nav>
   <button class="btn btn-sm btn-outline-secondary" type="button" (click)="comeback()">comeback</button>
+  <button class="btn btn-sm btn-outline-secondary" type="button" (click)="addToFriend()">friend</button>
 </nav>
 <div *ngFor="let photo of photos">
   <img src="data:image/jpeg;base64,{{photo.content}}"><br>

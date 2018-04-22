@@ -6,4 +6,5 @@ class User {
   name:string;
   surname:string;
   file:File[];
+  messages:Message[];
  }

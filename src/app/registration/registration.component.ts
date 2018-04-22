@@ -14,7 +14,7 @@ export class RegistrationComponent{
     private authenticationService: AuthService) { }
 
   registration() {
-   this.authenticationService.registration(this.model.username,this.model.password,this.model.email,this.model.name,this.model.surname);
-   this.router.navigate([''])
+      this.authenticationService.registration(this.model.username, this.model.password, this.model.email, this.model.name, this.model.surname);
+      this.router.navigate(['']);
   }
 }

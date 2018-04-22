@@ -39,4 +39,10 @@ export class AnotherMainComponent implements OnInit {
   comeback(){
     this.router.navigate(["main"])
   }
+
+  addToFriend() {
+    this.route.params.subscribe(params => {
+      this.authService.addFriend(params["id"]).subscribe(res=>console.log(res.json()));
+    });
+  }
 }

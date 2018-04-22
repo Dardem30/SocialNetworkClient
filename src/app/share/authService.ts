@@ -9,6 +9,7 @@ import {HttpEvent, HttpRequest} from '@angular/common/http';
 export class AuthService {
   token:string;
   private user1: User;
+  private user2:User;
   constructor(private http:Http,private router:Router){
 
   }
@@ -87,6 +88,12 @@ export class AuthService {
     let options = new RequestOptions({headers: header});
     return this.http.get('http://localhost:8080/users/'+userId,options);
   }
+  dialogTree(userName:string,userId:number){
+    let header = new Headers();
+    header.append('Token',localStorage.getItem("currentUser"))
+    let options = new RequestOptions({headers: header});
+    return this.http.get('http://localhost:8080/dialogTree/'+userId+"/"+userName,options);
+  }
   sendComment(photoId: number,text:string){
     const formdata: FormData = new FormData();
     formdata.append('username',localStorage.getItem("username"));
@@ -97,12 +104,17 @@ export class AuthService {
     return this.http.post('http://localhost:8080/comment/'+photoId,formdata,options);
   }
   sendMessage(userId:number, text:string){
-    const formdata: FormData = new FormData();
-    formdata.append('text',text);
-    let header = new Headers();
-    header.append('Token',localStorage.getItem("currentUser"))
-    let options = new RequestOptions({headers: header});
-    return this.http.post('http://localhost:8080/sendMessage/'+userId,formdata,options);
+    this.fetchByUsername(localStorage.getItem("username")).subscribe(res=> {
+      this.user2=res.json() as User;
+    })
+      const formdata: FormData = new FormData();
+      formdata.append('text', text);
+      formdata.append('name',this.user2.name);
+      let header = new Headers();
+      header.append('Token', localStorage.getItem("currentUser"))
+      let options = new RequestOptions({headers: header});
+      return this.http.post('http://localhost:8080/sendMessage/' + userId, formdata, options);
+
   }
   sendAnswer(comentId: number,text:string){
     const formdata: FormData = new FormData();
@@ -112,5 +124,19 @@ export class AuthService {
     header.append('Token',localStorage.getItem("currentUser"))
     let options = new RequestOptions({headers: header});
     return this.http.post('http://localhost:8080/answer/'+comentId,formdata,options);
+  }
+  addFriend(friendId:number){
+    const formdata: FormData = new FormData();
+    formdata.append('username',localStorage.getItem("username"));
+    let header = new Headers();
+    header.append('Token',localStorage.getItem("currentUser"))
+    let options = new RequestOptions({headers: header});
+    return this.http.post('http://localhost:8080/addFriend/'+friendId,formdata,options);
+  }
+  listUnconfermedFriends(id:number){
+    let header = new Headers();
+    header.append('Token',localStorage.getItem("currentUser"))
+    let options = new RequestOptions({headers: header});
+    return this.http.get('http://localhost:8080/findAllFriend/'+id,options);
   }
 }

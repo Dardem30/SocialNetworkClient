@@ -1,0 +1,13 @@
+<header-comp></header-comp>
+<div *ngFor="let message of messages">
+  {{message.userName}}:{{message.text}}:{{message.date}}
+  <hr>
+</div>
+<div class="form-group">
+  <form  (ngSubmit)="f.form.valid && sendMessageTo()" #f="ngForm" >
+    <label for="comment">Comment:</label>
+    <textarea class="form-control" rows="5" id="comment" name="messageText" [(ngModel)]="model.messageText" #messageText="ngModel" required></textarea>
+    <div *ngIf="f.submitted && !messageText.valid" class="help-block" style="color: crimson">void</div>
+    <button type="submit" class="btn btn-primary">send</button>
+  </form>
+</div>

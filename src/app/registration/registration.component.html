@@ -23,12 +23,12 @@
     <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !name.valid }">
       <label for="email">Name</label>
       <input type="text" class="form-control" name="name" [(ngModel)]="model.name" #name="ngModel" required minlength="5" maxlength="19"/>
-      <div *ngIf="f.submitted && !email.valid" class="help-block" style="color: crimson">Name is required and must be longer then 4 symbols or shorter then 20</div>
+      <div *ngIf="f.submitted && !name.valid" class="help-block" style="color: crimson">Name is required and must be longer then 4 symbols or shorter then 20</div>
     </div>
     <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !surname.valid }">
       <label for="email">Surname</label>
       <input type="text" class="form-control" name="surname" [(ngModel)]="model.surname" #surname="ngModel" required minlength="5" maxlength="19"/>
-      <div *ngIf="f.submitted && !email.valid" class="help-block" style="color: crimson">Email is required and must be longer then 5 symbols or shorter then 20</div>
+      <div *ngIf="f.submitted && !surname.valid" class="help-block" style="color: crimson">Email is required and must be longer then 5 symbols or shorter then 20</div>
     </div>
 
     <div class="form-group">

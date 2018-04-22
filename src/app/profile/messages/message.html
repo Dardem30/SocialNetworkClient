@@ -1,0 +1,4 @@
+<header-comp></header-comp>
+<div *ngFor="let message of user.messages">
+  <div (click)="toDialog(message.userName)">{{message.userName}}</div>
+</div>
