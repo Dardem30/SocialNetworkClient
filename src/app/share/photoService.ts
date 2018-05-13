@@ -9,7 +9,6 @@ export class PhotoService {
   }
   pushFileToStorage(file: File) {
     const formdata: FormData = new FormData();
-    console.log(localStorage.getItem("currentUser"));
     formdata.append('file', file);
     formdata.append('username', localStorage.getItem("username"));
     formdata.append('Token',localStorage.getItem("currentUser"));
@@ -19,6 +18,6 @@ export class PhotoService {
     header.append('Token',localStorage.getItem("currentUser"));
     header.append('enctype', 'multipart/form-data');
     let options=new RequestOptions({headers:header});
-    return this.http.post("http://localhost:8080/photo",formdata,options);
+    return this.http.post("https://socialnetwork2.herokuapp.com/photo",formdata,options);
   }
 }

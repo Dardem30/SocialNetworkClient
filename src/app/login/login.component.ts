@@ -8,7 +8,7 @@ import {AuthService} from '../share/authService';
   selector: 'login',
   templateUrl: './login.component.html'
 })
-export class LoginComponent{
+export class LoginComponent {
   model: any = {};
   loading = false;
   error = '';

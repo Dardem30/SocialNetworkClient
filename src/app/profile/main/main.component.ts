@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../share/authService';
 import {PhotoService} from '../../share/photoService';
 import {HttpEventType, HttpResponse} from '@angular/common/http';
@@ -9,40 +9,28 @@ import {Router} from '@angular/router';
   templateUrl: './main.component.html'
 
 })
-export class MainComponent{
-  selectedFiles: FileList;
-  currentFileUpload: File;
-  progress: { percentage: number } = { percentage: 0 };
-  user:User;
-  photos:Photo[];
-
+export class MainComponent implements OnInit{
+  photos:Photo[]=new Array();
   constructor(private photoService:PhotoService,private authService:AuthService,private router:Router) { }
+  ngOnInit(): void {
 
-  ngOnInit() {
-    this.reboot();
-  }
-  reboot(){
-    this.authService.fetchByUsername(localStorage.getItem("username")).subscribe(res=> {
-      this.authService.fetchPhotosById((res.json() as User).id).subscribe(res => this.photos = res.json() as Photo[]);
+    this.authService.fetchByUsername(localStorage.getItem("username")).subscribe(res=>{
+      this.authService.listFriends((res.json() as User).id).subscribe(res=>{
+        for(let friend of res.json() as Friend[]){
+          this.authService.friendPhoto(friend.id).subscribe(res=>{
+           for(let photo of res.json() as Photo[]){
+             this.photos.push(photo);
+           }
+          })
+        }
+      })
     })
   }
-  selectFile(event) {
-    this.selectedFiles = event.target.files;
-  }
-
-  upload() {
-    this.progress.percentage = 0;
-
-    this.currentFileUpload = this.selectedFiles.item(0);
-    this.photoService.pushFileToStorage(this.currentFileUpload).subscribe(event => {
-      console.log(event);
-    });
-
-    this.selectedFiles = undefined;
-    this.router.navigate(['main']);
+  userImage() {
+    this.router.navigate(["images"])
   }
   like(id:number){
-    this.authService.like(id).subscribe(res=>{this.reboot();console.log(res.json())})
+    this.authService.like(id).subscribe(res=>{this.router.navigate(["main"]);console.log(res.json())})
   }
   comment(id:number){
     this.router.navigate(['comment', id]);

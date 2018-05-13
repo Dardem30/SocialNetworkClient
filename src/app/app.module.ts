@@ -21,6 +21,7 @@ import {CommentPageComponent} from './profile/commentPage/commentPage.component'
 import {MessageComponent} from './profile/messages/message';
 import {DialogComponent} from './profile/dialog/dialog.component';
 import {FriendComponent} from './profile/friends/friend.component';
+import {ImagesComponent} from './profile/images/images.component';
 
 const routes: Routes = [
   {path: '', component:LoginComponent},
@@ -31,6 +32,7 @@ const routes: Routes = [
   {path: 'message/:id', component:MessageComponent,canActivate: [AuthGuard]},
   {path: 'dialog/:userName', component:DialogComponent,canActivate: [AuthGuard]},
   {path: 'friends/:id', component:FriendComponent,canActivate: [AuthGuard]},
+  {path: 'images', component:ImagesComponent,canActivate: [AuthGuard]},
   {path: 'registration', component:RegistrationComponent}
 ];
 @NgModule({
@@ -46,7 +48,8 @@ const routes: Routes = [
     CommentPageComponent,
     MessageComponent,
     DialogComponent,
-    FriendComponent
+    FriendComponent,
+    ImagesComponent
   ],
   imports: [
     BrowserModule,

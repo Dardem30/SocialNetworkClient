@@ -18,7 +18,7 @@ export class AuthService {
     let header=new Headers();
     header.append('Content-Type','application/json');
     let options=new RequestOptions({headers:header});
-   return this.http.post("http://localhost:8080/auth",JSON.parse(body),options)
+   return this.http.post("https://socialnetwork2.herokuapp.com/auth",JSON.parse(body),options)
        .map((response: Response) => {
         let token = response.headers.get('access-token');
          if (token) {
@@ -38,26 +38,26 @@ export class AuthService {
     let header = new Headers();
     header.append('Content-Type', 'application/json');
     let options = new RequestOptions({headers: header});
-    this.http.post('http://localhost:8080/signUp', JSON.parse(body), options).subscribe(res => console.log(res));
+    this.http.post('https://socialnetwork2.herokuapp.com/signUp', JSON.parse(body), options).subscribe(res => console.log(res));
   }
   fetchByUsername(username:string){
     let header = new Headers();
     header.append('Content-Type', 'application/json');
     header.append('Token',localStorage.getItem("currentUser"))
     let options = new RequestOptions({headers: header});
-   return this.http.get('http://localhost:8080/usersByUsername/'+username,options);
+   return this.http.get('https://socialnetwork2.herokuapp.com/usersByUsername/'+username,options);
   }
   fetchPhotosById(id:number) {
     let header = new Headers();
     header.append('Token', localStorage.getItem("currentUser"))
     let options = new RequestOptions({headers: header});
-    return this.http.get('http://localhost:8080/userPhoto/' + id, options);
+    return this.http.get('https://socialnetwork2.herokuapp.com/userPhoto/' + id, options);
   }
   findOnlyPhotoById(photoId){
     let header = new Headers();
     header.append('Token', localStorage.getItem("currentUser"))
     let options = new RequestOptions({headers: header});
-    return this.http.get('http://localhost:8080/photo/' +photoId, options);
+    return this.http.get('https://socialnetwork2.herokuapp.com/photo/' +photoId, options);
   }
   like(id:number){
     const formdata: FormData = new FormData();
@@ -67,7 +67,7 @@ export class AuthService {
     let header=new Headers();
     header.append('Token',localStorage.getItem("currentUser"));
     let options=new RequestOptions({headers:header});
-    return this.http.post("http://localhost:8080/photo/like/"+id,formdata,options);
+    return this.http.post("https://socialnetwork2.herokuapp.com/photo/like/"+id,formdata,options);
   }
   logout() {
     localStorage.removeItem('currentUser');
@@ -79,20 +79,20 @@ export class AuthService {
     header.append('Content-Type', 'application/json');
     header.append('Token',localStorage.getItem("currentUser"))
     let options = new RequestOptions({headers: header});
-    return this.http.get('http://localhost:8080/usersName/'+name,options);
+    return this.http.get('https://socialnetwork2.herokuapp.com/usersName/'+name,options);
   }
   fetchById(userId:number){
     let header = new Headers();
     header.append('Content-Type', 'application/json');
     header.append('Token',localStorage.getItem("currentUser"))
     let options = new RequestOptions({headers: header});
-    return this.http.get('http://localhost:8080/users/'+userId,options);
+    return this.http.get('https://socialnetwork2.herokuapp.com/users/'+userId,options);
   }
   dialogTree(userName:string,userId:number){
     let header = new Headers();
     header.append('Token',localStorage.getItem("currentUser"))
     let options = new RequestOptions({headers: header});
-    return this.http.get('http://localhost:8080/dialogTree/'+userId+"/"+userName,options);
+    return this.http.get('https://socialnetwork2.herokuapp.com/dialogTree/'+userId+"/"+userName,options);
   }
   sendComment(photoId: number,text:string){
     const formdata: FormData = new FormData();
@@ -101,7 +101,7 @@ export class AuthService {
     let header = new Headers();
     header.append('Token',localStorage.getItem("currentUser"))
     let options = new RequestOptions({headers: header});
-    return this.http.post('http://localhost:8080/comment/'+photoId,formdata,options);
+    return this.http.post('https://socialnetwork2.herokuapp.com/comment/'+photoId,formdata,options);
   }
   sendMessage(userId:number, text:string){
     this.fetchByUsername(localStorage.getItem("username")).subscribe(res=> {
@@ -113,7 +113,7 @@ export class AuthService {
       let header = new Headers();
       header.append('Token', localStorage.getItem("currentUser"))
       let options = new RequestOptions({headers: header});
-      return this.http.post('http://localhost:8080/sendMessage/' + userId, formdata, options);
+      return this.http.post('https://socialnetwork2.herokuapp.com/sendMessage/' + userId, formdata, options);
 
   }
   sendAnswer(comentId: number,text:string){
@@ -123,7 +123,7 @@ export class AuthService {
     let header = new Headers();
     header.append('Token',localStorage.getItem("currentUser"))
     let options = new RequestOptions({headers: header});
-    return this.http.post('http://localhost:8080/answer/'+comentId,formdata,options);
+    return this.http.post('https://socialnetwork2.herokuapp.com/answer/'+comentId,formdata,options);
   }
   addFriend(friendId:number){
     const formdata: FormData = new FormData();
@@ -131,12 +131,33 @@ export class AuthService {
     let header = new Headers();
     header.append('Token',localStorage.getItem("currentUser"))
     let options = new RequestOptions({headers: header});
-    return this.http.post('http://localhost:8080/addFriend/'+friendId,formdata,options);
+    return this.http.post('https://socialnetwork2.herokuapp.com/addFriend/'+friendId,formdata,options);
+  }
+  confirm(name:string){
+    const formdata: FormData = new FormData();
+    formdata.append('username',localStorage.getItem("username"));
+    let header = new Headers();
+    header.append('Token',localStorage.getItem("currentUser"))
+    let options = new RequestOptions({headers: header});
+    return this.http.post('https://socialnetwork2.herokuapp.com/confirm/'+name,formdata,options);
   }
   listUnconfermedFriends(id:number){
     let header = new Headers();
     header.append('Token',localStorage.getItem("currentUser"))
     let options = new RequestOptions({headers: header});
-    return this.http.get('http://localhost:8080/findAllFriend/'+id,options);
+    return this.http.get('https://socialnetwork2.herokuapp.com/findAllUnconfermdFriend/'+id,options);
   }
+  listFriends(id:number){
+    let header = new Headers();
+    header.append('Token',localStorage.getItem("currentUser"))
+    let options = new RequestOptions({headers: header});
+    return this.http.get('https://socialnetwork2.herokuapp.com/findAllFriends/'+id,options);
+  }
+  friendPhoto(friendId:number){
+    let header = new Headers();
+    header.append('Token',localStorage.getItem("currentUser"))
+    let options = new RequestOptions({headers: header});
+    return this.http.get('https://socialnetwork2.herokuapp.com/friendPhoto/'+friendId,options);
+  }
+
 }

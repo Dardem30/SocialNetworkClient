@@ -1,4 +1,16 @@
 <header-comp></header-comp>
+<div *ngIf="friendsUnconfermd.length>0">
+<h6 class="mat-h3">Are they familiar?</h6>
+</div>
+<div *ngFor="let friend of friendsUnconfermd">
+  {{friend.name}}:  <button type="submit" class="btn btn-primary" (click)="confirm(friend.name)">confirm</button>
+  <hr>
+</div>
+<div *ngIf="friends.length>0">
+<h6 class="mat-h3">Friends</h6>
+</div>
 <div *ngFor="let friend of friends">
   {{friend.name}}
+  <hr>
 </div>
+
