@@ -18,7 +18,8 @@ export class FriendComponent implements OnInit {
     })
   }
   confirm(name:string){
-      this.authService.confirm(name).subscribe(res => console.log(res.json()))
+      this.authService.confirm(name).subscribe(res => console.log(res.json()));
+      this.router.navigate(["main"]);
   }
 
 }

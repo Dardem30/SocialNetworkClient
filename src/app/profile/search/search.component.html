@@ -1,4 +1,5 @@
 <header-comp></header-comp>
-<div *ngFor="let user of users">
-  <div (click)="toAnother(user.id)">{{user.name}}</div>
+<div *ngFor="let user of users" style="margin-left: 30px; margin-top: 30px">
+  <div (click)="toAnother(user.id)">{{user.name}} {{user.surname}}</div>
+  <hr>
 </div>
