@@ -4,8 +4,8 @@
     <img src="http://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png">
   </div>
   <ul class="navbar-nav mr-auto">
-    <li class="nav-item active">{{user.name}}</li>
-    <li class="nav-item active">{{user.surname}}</li>
+    <li class="nav-item active" style="margin-left: 15px; margin-right: 5px" (click)="toMainPage()">{{user.name}}</li>
+    <li class="nav-item active" style="margin-left: 15px; margin-right: 5px" (click)="toMainPage()">{{user.surname}}</li>
   </ul>
   <nav class="navbar navbar-light bg-light">
     <form class="form-inline" (submit)="search()">
@@ -13,7 +13,7 @@
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
   </nav>
-  <button class="btn mat-primary" (click)="messages()">messages</button>
-  <button class="btn mat-primary" (click)="friendList()">friends</button>
+  <button class="btn mat-primary" (click)="messages()" style="margin-left: 5px; margin-right: 5px">messages</button>
+  <button class="btn mat-primary" (click)="friendList()" style="margin-left: 5px; margin-right: 5px">friends</button>
   <button class="btn btn-sm btn-outline-secondary" type="button" (click)="logout()">logout</button>
 </nav>

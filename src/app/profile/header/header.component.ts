@@ -37,4 +37,7 @@ export class HeaderComponent implements OnInit{
       this.router.navigate(["friends",this.userToSupport.id]);
     })
   }
+  toMainPage() {
+    this.router.navigate(["main"]);
+  }
 }
